@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Laravel\Passport\Client as OClient;
 use Redirect;
 
 class PublicUsersController extends Controller
@@ -116,11 +117,11 @@ class PublicUsersController extends Controller
             if (!empty($user[0])) {
                 if (Hash::check($password, $user[0]->password)) {
 
-
+                    $token = $user->createToken('LaravelAuthApp')->accessToken;
                     return json_encode(
                         array(
                             'status' => true,
-                            'sessionUserId' => $user[0]->password,
+                            'token' => $token,
                             'name' => $user[0]->name,
                             'phonenumber' => $user[0]->phonenumber,
                             'email_address' => $user[0]->email,

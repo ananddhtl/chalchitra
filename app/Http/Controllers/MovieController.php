@@ -15,7 +15,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $list= Movie::get();
+        $list = Movie::get();
         return view('backend.movie.list', compact('list'));
     }
 
@@ -23,19 +23,18 @@ class MovieController extends Controller
      * Show the form for creating a new resource.
      */
     public function addmovie()
-    { 
+    {
         $category = MovieCategory::get();
-        return view('backend.movie.add',compact('category'));
+        return view('backend.movie.add', compact('category'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        {
+    { {
             try {
-               
+
                 $request->validate([
                     'title' => ['required', 'string', 'max:100', 'min:2'],
                     'iframelink' => ['required'],
@@ -44,7 +43,7 @@ class MovieController extends Controller
                     'time_duration' => ['required',],
                     'category' => ['required',],
                     'publish_date' => ['required',],
-    
+
                 ]);
                 $movie = new Movie();
                 $movie->title = $request->title;
@@ -69,7 +68,7 @@ class MovieController extends Controller
                 return $ex->getMessage();
             }
         }
-    
+
     }
 
     /**
@@ -104,15 +103,26 @@ class MovieController extends Controller
         //
     }
 
-    public function getHomepage() {
+    public function getHomepage()
+    {
+        $list = Movie::select('id', 'title', 'thumbnail')->get();
 
-        $list = Movie::select('id','title','thumbnail')->get();
-        return response()->json($list);
+        $data = [];
+        foreach ($list as $movie) {
+            $data[$movie->id] = [
+                'title' => $movie->title,
+                'thumbnail' => $movie->thumbnail
+            ];
+        }
+
+        return response()->json($data);
     }
 
-    public function getmoviedescription(Request $request, $id) {
+
+    public function getmoviedescription(Request $request, $id)
+    {
         $list = Movie::where('id', $id)->get();
         return response()->json($list);
     }
-    
+
 }
