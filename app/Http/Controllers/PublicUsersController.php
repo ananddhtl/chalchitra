@@ -103,55 +103,5 @@ class PublicUsersController extends Controller
     {
         //
     }
-    public function login(Request $request)
-    {
-        try {
-            $request->validate([
-                'email' => ['required', 'string', 'email', 'max:255'],
-                'password' => ['required', 'string', 'min:6'],
-            ]);
-            $email = $request->email;
-            $password = $request->password;
-            $user = \DB::table('public_users')->where('email', $email)->get();
-
-            if (!empty($user[0])) {
-                if (Hash::check($password, $user[0]->password)) {
-
-                    $token = $user->createToken('LaravelAuthApp')->accessToken;
-                    return json_encode(
-                        array(
-                            'status' => true,
-                            'token' => $token,
-                            'name' => $user[0]->name,
-                            'phonenumber' => $user[0]->phonenumber,
-                            'email_address' => $user[0]->email,
-                            'user_id' => $user[0]->id,
-                        )
-                    );
-
-                } else {
-
-                    return response()->json(['status' => false, 'message' => 'Incorrect Password.'], 200);
-
-                }
-            } else {
-                
-
-                return response()->json(['status' => false, 'message' => 'Incorrect email or email not found.'], 200);
-
-            }
-        } catch (ValidationException $e) {
-            $errors = $e->errors();
-            $firstError = [];
-
-            foreach ($errors as $field => $errorMessages) {
-                $firstError[$field] = $errorMessages[0];
-            }
-
-            return response()->json(['status' => 'error', 'message' => $firstError], 422);
-
-        } catch (\Exception $ex) {
-            return $ex->getMessage();
-        }
-    }
+   
 }
