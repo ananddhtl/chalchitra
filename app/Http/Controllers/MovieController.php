@@ -95,6 +95,7 @@ class MovieController extends BaseApiController
     public function getmoviedescription(Request $request, $id)
     {
         $list = Movie::where('id', $id)->first();
-        return response()->json($list);
+
+        return $this->sendResponse($list);
     }
 }
