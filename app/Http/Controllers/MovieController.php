@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use App\Models\MovieCategory;
 use Illuminate\Validation\ValidationException;
 
-class MovieController extends Controller
+class MovieController extends BaseApiController
 {
     /**
      * Display a listing of the resource.
@@ -62,67 +62,39 @@ class MovieController extends Controller
                 $movie->save();
                 return redirect()->route('admin.getmovies')->with('message', 'Your data has been saved successfully');
             } catch (ValidationException $e) {
+                dd($e->getMessage());
+                dd('cat3');
                 $errors = $e->validator->errors();
                 return redirect()->back()->withErrors($errors)->withInput();
             } catch (\Exception $ex) {
+                dd('cat2', $ex->getMessage());
                 return $ex->getMessage();
             }
         }
-
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Movie $movie)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Movie $movie)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Movie $movie)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Movie $movie)
-    {
-        //
     }
 
     public function getHomepage()
     {
-        $list = Movie::select('id', 'title', 'thumbnail')->get();
+        $list = Movie::select('id', 'title', 'thumbnail', 'iframe_link', 'time_duration')->get();
 
         $data = [];
         foreach ($list as $movie) {
-            $data[$movie->id] = [
+            $data[] = [
+                'id' => $movie->id,
                 'title' => $movie->title,
-                'thumbnail' => $movie->thumbnail
+                'thumbnail' => $movie->thumbnail,
+                'iframe_link' => $movie->iframe_link,
+                'time_duration' => $movie->time_duration
             ];
         }
 
-        return response()->json($data);
+        return $this->sendResponse($data);
     }
 
 
     public function getmoviedescription(Request $request, $id)
     {
-        $list = Movie::where('id', $id)->get();
+        $list = Movie::where('id', $id)->first();
         return response()->json($list);
     }
-
 }
