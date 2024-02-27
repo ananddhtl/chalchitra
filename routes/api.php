@@ -34,5 +34,8 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
-Route::get('gethomepage', [ApiMovieController::class, 'getHomepage']);
-Route::get('getmoviedescription/{id}', [ApiMovieController::class, 'getmoviedescription']);
+Route::group(['prefix' => 'movie'], function () {
+    Route::get('get-date', [ApiMovieController::class, 'getDate']);
+    Route::get('lists', [ApiMovieController::class, 'getHomepage']);
+    Route::get('list/{id}', [ApiMovieController::class, 'getmoviedescription']);
+});
