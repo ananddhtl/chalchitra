@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\MovieController as ApiMovieController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicUsersController;
@@ -33,6 +34,5 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
-
-Route::get('/gethomepage', [MovieController::class, 'gethomepage']);
-Route::get('/getmoviedescription/{id}', [MovieController::class, 'getmoviedescription']);
+Route::get('gethomepage', [ApiMovieController::class, 'getHomepage']);
+Route::get('getmoviedescription/{id}', [ApiMovieController::class, 'getmoviedescription']);

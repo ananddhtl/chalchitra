@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model
 {
     use HasFactory;
+
+    protected $with = ['movie_category'];
+
+    public function movie_category()
+    {
+        return $this->belongsTo(MovieCategory::class, 'category', 'id');
+    }
 }
