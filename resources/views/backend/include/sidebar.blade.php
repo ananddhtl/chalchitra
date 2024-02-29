@@ -98,43 +98,39 @@
         </li>
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons mdi mdi-lock-open-outline"></i>
-                <div data-i18n="Authentications">Authentications</div>
+                <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
+                <div data-i18n="Account Settings">Halls</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                        <div data-i18n="Basic">Login</div>
+                    <a href="{{route('admin.addseats')}}" class="menu-link">
+                        <div data-i18n="Account">Add</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                        <div data-i18n="Basic">Register</div>
+                    <a href="{{route('admin.getmovies')}}" class="menu-link">
+                        <div data-i18n="Notifications">List</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                        <div data-i18n="Basic">Forgot Password</div>
-                    </a>
-                </li>
+                
             </ul>
-        </li>
-        <li class="menu-item">
+        </li> <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons mdi mdi-cube-outline"></i>
-                <div data-i18n="Misc">Misc</div>
+                <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
+                <div data-i18n="Account Settings">Movie Details</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="pages-misc-error.html" class="menu-link">
-                        <div data-i18n="Error">Error</div>
+                    <a href="{{route('admin.addmovie')}}" class="menu-link">
+                        <div data-i18n="Account">Add</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="pages-misc-under-maintenance.html" class="menu-link">
-                        <div data-i18n="Under Maintenance">Under Maintenance</div>
+                    <a href="{{route('admin.getmovies')}}" class="menu-link">
+                        <div data-i18n="Notifications">List</div>
                     </a>
                 </li>
+                
             </ul>
         </li>
         <!-- Components -->
