@@ -31,7 +31,14 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::middleware('api')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
+
+        Route::post('change-password', [AuthController::class, 'changePassword']);
+
+        Route::post('verify-otp', [AuthController::class, 'forgotOTPVerify']);
+        Route::post('reset-password', [AuthController::class, 'resetPassword']);
     });
+
+    Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
 });
 
 Route::group(['prefix' => 'movie'], function () {

@@ -20,6 +20,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            $table->string('otp')->nullable();
+            $table->timestamp('otp_sent_at')->nullable();
+            $table->timestamp('otp_verified_at')->nullable();
+            $table->string('temp_token')->nullable();
             $table->timestamps();
         });
     }
