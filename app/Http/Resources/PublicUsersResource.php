@@ -20,7 +20,7 @@ class PublicUsersResource extends JsonResource
             'name' => $this->name,
             'phonenumber' => $this->phonenumber,
             'address' => $this->address,
-            'gender' => $this->gender,
+            'gender' => str($this->gender),
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Movie;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\MovieCategory;
+use App\Models\Show;
 use Illuminate\Validation\ValidationException;
 
 class MovieController extends Controller
@@ -43,6 +44,7 @@ class MovieController extends Controller
                 'time_duration' => ['required',],
                 'category' => ['required',],
                 'publish_date' => ['required',],
+                'end_date' => 'required|after:publish_date',
 
             ]);
             $movie = new Movie();
@@ -52,6 +54,7 @@ class MovieController extends Controller
             $movie->category = $request->category;
             $movie->time_duration = $request->time_duration;
             $movie->publish_date = $request->publish_date;
+            $movie->end_date = $request->end_date;
 
             if ($request->hasFile('thumbnail')) {
                 $image = $request->file('thumbnail');
@@ -71,4 +74,68 @@ class MovieController extends Controller
         }
     }
 
+    public function assignShowtime($id)
+    {
+        $movie = Movie::findOrFail($id);
+        $start_date = $movie->publish_date;
+        $end_date = $movie->end_date;
+
+        $movie_show_dates = [];
+
+        while ($start_date <= $end_date) {
+            $movie_show_dates[] = $start_date;
+            $start_date = Carbon::parse($start_date)->addDay()->format('Y-m-d');
+        }
+
+        foreach ($movie_show_dates as $date) {
+            $showTimesByDate[$date] = $movie->shows()->wherePivot('movie_date', $date)->pluck('show_id')->toArray();
+        }
+
+        // Custom sorting function
+        // $sortedShowTimes = $showTimes->sortBy(function ($time) {
+        //     // Extract hour and AM/PM from the time
+        //     preg_match('/(\d+):(\d+) (AM|PM)/', $time, $matches);
+        //     $hour = intval($matches[1]);
+        //     $ampm = $matches[3];
+
+        //     // Convert PM hours to 24-hour format
+        //     if ($ampm === 'PM') {
+        //         $hour += 12;
+        //     }
+
+        //     return $hour;
+        // });
+        // $data['show_times'] = $sortedShowTimes->all();
+
+        $data['show_times'] = Show::all();
+        $data['movie'] = $movie;
+        $data['movie_show_dates'] = $movie_show_dates;
+        $data['showTimesByDate'] = $showTimesByDate;
+
+        return view('backend.movie.assign-show-time', $data);
+    }
+
+    public function storeMovieShowtime(Request $request)
+    {
+        $movidId = $request->movie_id;
+        $movie = Movie::findOrFail($movidId);
+
+        $moviesDates = $request->date;
+
+        foreach ($moviesDates as $key => $md) {
+            // Get currently selected show times
+            $selectedShowTimes = $request->show_time[$key] ?? [];
+            // Get existing show times for the date
+            $existingShowTimes = $movie->shows()->wherePivot('movie_date', $md)->pluck('shows.id')->toArray();
+
+            // Attach selected show times
+            $movie->shows()->attach($selectedShowTimes, ['movie_date' => $md]);
+
+            // Detach unselected show times
+            $unselectedShowTimes = array_diff($existingShowTimes, $selectedShowTimes);
+            $movie->shows()->detach($unselectedShowTimes, ['movie_date' => $md]);
+        }
+
+        return redirect()->route('admin.getmovies')->with('success', 'Your data has been saved successfully');
+    }
 }

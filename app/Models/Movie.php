@@ -15,4 +15,9 @@ class Movie extends Model
     {
         return $this->belongsTo(MovieCategory::class, 'category', 'id');
     }
+
+    public function shows()
+    {
+        return $this->belongsToMany(Show::class, 'movie_shows')->withPivot('date');
+    }
 }

@@ -37,6 +37,9 @@ Route::group(["prefix" => "admin", "as" => "admin."], function () {
     Route::get('/addmovie', [MovieController::class, 'addmovie'])->name('addmovie');
     Route::POST('/movie-store', [MovieController::class, 'store'])->name('storemovie');
     Route::get('/listmovies', [MovieController::class, 'index'])->name('getmovies');
+    Route::get('/movie/assign-showtime/{id}', [MovieController::class, 'assignShowtime'])->name('assignshowtime');
+    Route::post('/movie/assign-showtime', [MovieController::class, 'storeMovieShowtime'])->name('store.movie.showtime');
+
     Route::get('/addcategory', [MovieCategoryController::class, 'addcategory'])->name('addcategory');
     Route::post('/storecategory', [MovieCategoryController::class, 'store'])->name('storecategory');
     Route::get('/listcategory', [MovieCategoryController::class, 'index'])->name('listcategory');

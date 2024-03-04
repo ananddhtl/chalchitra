@@ -3,7 +3,8 @@
         <a href="index.html" class="app-brand-link">
             <span class="app-brand-logo demo me-1">
                 <span style="color: var(--bs-primary)">
-                    <svg width="30" height="24" viewBox="0 0 250 196" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="30" height="24" viewBox="0 0 250 196" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M12.3002 1.25469L56.655 28.6432C59.0349 30.1128 60.4839 32.711 60.4839 35.5089V160.63C60.4839 163.468 58.9941 166.097 56.5603 167.553L12.2055 194.107C8.3836 196.395 3.43136 195.15 1.14435 191.327C0.395485 190.075 0 188.643 0 187.184V8.12039C0 3.66447 3.61061 0.0522461 8.06452 0.0522461C9.56056 0.0522461 11.0271 0.468577 12.3002 1.25469Z"
                             fill="currentColor" />
@@ -45,36 +46,36 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
-       
+
 
         <!-- Layouts -->
-       
+
 
         <li class="menu-header fw-medium mt-4">
             <span class="menu-header-text">Apps &amp; Pages</span>
         </li>
         <!-- Apps -->
-       
-        
-        
+
+
+
         <!-- Pages -->
-         <li class="menu-item">
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
                 <div data-i18n="Account Settings">Movie Category</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="{{route('admin.addcategory')}}" class="menu-link">
+                    <a href="{{ route('admin.addcategory') }}" class="menu-link">
                         <div data-i18n="Account">Add</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{route('admin.listcategory')}}" class="menu-link">
+                    <a href="{{ route('admin.listcategory') }}" class="menu-link">
                         <div data-i18n="Notifications">List</div>
                     </a>
                 </li>
-                
+
             </ul>
         </li>
         <li class="menu-item">
@@ -84,16 +85,16 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="{{route('admin.addmovie')}}" class="menu-link">
+                    <a href="{{ route('admin.addmovie') }}" class="menu-link">
                         <div data-i18n="Account">Add</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{route('admin.getmovies')}}" class="menu-link">
+                    <a href="{{ route('admin.getmovies') }}" class="menu-link">
                         <div data-i18n="Notifications">List</div>
                     </a>
                 </li>
-                
+
             </ul>
         </li>
         <li class="menu-item">
@@ -103,41 +104,42 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="{{route('admin.addseats')}}" class="menu-link">
+                    {{-- <a href="{{route('admin.addseats')}}" class="menu-link">
                         <div data-i18n="Account">Add</div>
-                    </a>
+                    </a> --}}
                 </li>
                 <li class="menu-item">
-                    <a href="{{route('admin.getmovies')}}" class="menu-link">
+                    <a href="{{ route('admin.getmovies') }}" class="menu-link">
                         <div data-i18n="Notifications">List</div>
                     </a>
                 </li>
-                
+
             </ul>
-        </li> <li class="menu-item">
+        </li>
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
                 <div data-i18n="Account Settings">Movie Details</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="{{route('admin.addmovie')}}" class="menu-link">
+                    <a href="{{ route('admin.addmovie') }}" class="menu-link">
                         <div data-i18n="Account">Add</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{route('admin.getmovies')}}" class="menu-link">
+                    <a href="{{ route('admin.getmovies') }}" class="menu-link">
                         <div data-i18n="Notifications">List</div>
                     </a>
                 </li>
-                
+
             </ul>
         </li>
         <!-- Components -->
-        
+
 
         <!-- Extended components -->
-       
+
 
         <!-- Forms & Tables -->
 

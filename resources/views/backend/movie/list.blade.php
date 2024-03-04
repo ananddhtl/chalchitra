@@ -13,7 +13,7 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-                <h4 class="py-3 mb-4"><span class="text-muted fw-light">Movie  /</span> List </h4>
+                <h4 class="py-3 mb-4"><span class="text-muted fw-light">Movie /</span> List </h4>
 
 
 
@@ -31,6 +31,7 @@
                                             <th>Iframe Link</th>
                                             <th>Time Duration</th>
                                             <th>Publish Date</th>
+                                            <th>End Date</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -42,7 +43,8 @@
                                                 <td>{{ $item->iframe_link }}</td>
                                                 <td>{{ $item->time_duration }}</td>
                                                 <td>{{ $item->publish_date }}</td>
-                                                <td>
+                                                <td>{{ $item->end_date }}</td>
+                                                <td class="d-flex">
                                                     <div class="dropdown">
                                                         <button type="button"
                                                             class="btn p-0 dropdown-toggle hide-arrow"
@@ -60,6 +62,11 @@
                                                                     class="mdi mdi-trash-can-outline me-1"></i>
                                                                 Delete</a>
                                                         </div>
+                                                    </div>
+                                                    <div class="" title="Assign Show Time">
+                                                        <a
+                                                            href="{{ route('admin.assignshowtime', ['id' => $item->id]) }}"><i
+                                                                class="mdi mdi-information me-1"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -88,6 +95,5 @@
 <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!-- / Layout wrapper -->
-
 
 @include('backend.include.footer')

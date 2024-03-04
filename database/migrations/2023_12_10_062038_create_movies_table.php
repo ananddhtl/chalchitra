@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('time_duration');
             $table->string('category');
             $table->date('publish_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

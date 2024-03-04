@@ -130,7 +130,7 @@ class AuthController extends BaseApiController
             $user->save();
 
             return $this->sendResponse([
-                'user' => $user,
+                'user' => new PublicUsersResource($user),
             ], "Password updated successfully");
         } catch (\Exception $e) {
             return $this->sendError("Server Error. Please try again later.");

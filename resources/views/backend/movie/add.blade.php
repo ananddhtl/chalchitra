@@ -166,6 +166,12 @@
                                                 placeholder="Enter release date" aria-label="Enter Movie Title"
                                                 aria-describedby="basic-addon33">
                                         </div>
+                                        <div class="input-group input-group-merge">
+                                            <label class="input-group-text">End Date :-</label>
+                                            <input type="date" class="form-control" name="end_date"
+                                                placeholder="Enter release date" aria-label="Enter Movie Title"
+                                                aria-describedby="basic-addon33">
+                                        </div>
                                         <div class="d-grid gap-2 col-lg-6 mx-auto">
                                             <button class="btn btn-primary btn-lg waves-effect waves-light"
                                                 type="submit">Save</button>
