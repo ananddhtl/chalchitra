@@ -125,11 +125,18 @@ class MovieController extends Controller
         foreach ($moviesDates as $key => $md) {
             // Get currently selected show times
             $selectedShowTimes = $request->show_time[$key] ?? [];
+
+            foreach ($selectedShowTimes as $showId) {
+                // Check if the show is already associated with the movie for the given date
+                $existingShow = $movie->shows()->wherePivot('movie_date', $md)->where('shows.id', $showId)->exists();
+
+                if (!$existingShow) {
+                    // If the show is not already associated, attach it
+                    $movie->shows()->attach($showId, ['movie_date' => $md]);
+                }
+            }
             // Get existing show times for the date
             $existingShowTimes = $movie->shows()->wherePivot('movie_date', $md)->pluck('shows.id')->toArray();
-
-            // Attach selected show times
-            $movie->shows()->attach($selectedShowTimes, ['movie_date' => $md]);
 
             // Detach unselected show times
             $unselectedShowTimes = array_diff($existingShowTimes, $selectedShowTimes);

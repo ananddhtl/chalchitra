@@ -11,6 +11,6 @@ class Show extends Model
 
     public function movies()
     {
-        return $this->belongsToMany(Movie::class, 'movie_shows')->withPivot('date');
+        return $this->belongsToMany(Movie::class, 'movie_shows')->withPivot('movie_date');
     }
 }

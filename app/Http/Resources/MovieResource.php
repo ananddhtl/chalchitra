@@ -21,7 +21,7 @@ class MovieResource extends JsonResource
             'thumbnail' => $this->thumbnail,
             'iframe_link' => $this->iframe_link,
             'time_duration' => $this->time_duration,
-            'category' => $this->movie_category->title
+            'category' => $this->movie_category->title,
         ];
     }
 }

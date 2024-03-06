@@ -9,7 +9,13 @@ class Movie extends Model
 {
     use HasFactory;
 
-    protected $with = ['movie_category'];
+    protected $with = ['movie_category', 'shows'];
+
+    public function scopeAvailableOn($query, $date)
+    {
+        return $query->where('publish_date', '<=', $date)
+            ->where('end_date', '>=', $date);
+    }
 
     public function movie_category()
     {
@@ -18,6 +24,6 @@ class Movie extends Model
 
     public function shows()
     {
-        return $this->belongsToMany(Show::class, 'movie_shows')->withPivot('date');
+        return $this->belongsToMany(Show::class, 'movie_shows', 'movie_id', 'show_id')->withPivot('movie_date');
     }
 }

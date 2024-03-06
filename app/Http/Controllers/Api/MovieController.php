@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\BaseApiController;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\MovieResource;
+use App\Http\Resources\MovieResourceCollection;
 use App\Models\Movie;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,26 +19,42 @@ class MovieController extends BaseApiController
         $dates = [];
 
         for ($i = 0; $i < 5; $i++) {
-            $dates[] = $today->copy()->addDays($i)->format('M d');
+            $date = [
+                'date' => $today->copy()->addDays($i)->format('Y-m-d'),
+                'short_date' => $today->copy()->addDays($i)->format('M d'),
+            ];
+
+            array_push($dates, $date);
         }
 
         return $this->sendResponse($dates, 'Date fetched successfully!');
     }
 
-    public function getHomepage()
+    public function getHomepage(Request $request)
     {
-        $movies = Movie::all();
+        try {
+            $date = $request->date;
 
-        if (!$movies) {
-            return $this->sendError('Movies not found!');
+            if (!$date) {
+                $date = Carbon::now()->format('Y-m-d');
+            }
+
+            $movies = Movie::availableOn($date)->get();
+
+            if (!$movies) {
+                return $this->sendError('Movies not found!');
+            }
+
+            return $this->sendResponse(new MovieResourceCollection($movies, $date), 'List of ' . $movies->count() . ' Movies fetched successfully!');
+        } catch (\Exception $e) {
+            return $this->sendError('Server error!', $e->getMessage(), 500);
         }
-
-        return $this->sendResponse(MovieResource::collection($movies), 'List of the Movies fetched successfully!');
     }
 
-    public function getmoviedescription($id)
+    public function getmoviedescription(Request $request, $id)
     {
-        $movie = Movie::find($id);
+        $date = $request->get('date');
+        $movie = Movie::findOrFail($id);
 
         if (!$movie) {
             return $this->sendError('Movie not found!');
