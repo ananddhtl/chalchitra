@@ -56,13 +56,18 @@ class MovieController extends BaseApiController
     {
         try {
             $date = $request->get('date');
+
+            if (!$date) {
+                $date = Carbon::now()->format('Y-m-d');
+            }
+
             $movie = Movie::findOrFail($id);
 
             if (!$movie) {
                 return $this->sendError('Movie not found!');
             }
 
-            return $this->sendResponse(new MovieResource($movie), 'Movie fetched successfully!');
+            return $this->sendResponse(new MovieResource($movie, $date), 'Movie fetched successfully!');
         } catch (Exception $e) {
             return $this->sendError('Something went wrong!');
         }
