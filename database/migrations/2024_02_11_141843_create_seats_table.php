@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
-            $table->integer("hall_id");
             $table->string("seat_title");
-            $table->integer("status");
+            $table->string('status')->default('available');
             $table->timestamps();
         });
     }

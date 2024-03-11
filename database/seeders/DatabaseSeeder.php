@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminTableSeeder::class,
             ShowTableSeeder::class,
+            SeatTableSeeder::class,
+            MovieTableSeeder::class,
         ]);
     }
 }

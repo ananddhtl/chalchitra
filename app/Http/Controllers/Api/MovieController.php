@@ -7,6 +7,7 @@ use App\Http\Resources\MovieResource;
 use App\Http\Resources\MovieResourceCollection;
 use App\Models\Movie;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 
 class MovieController extends BaseApiController
@@ -53,13 +54,17 @@ class MovieController extends BaseApiController
 
     public function getmoviedescription(Request $request, $id)
     {
-        $date = $request->get('date');
-        $movie = Movie::findOrFail($id);
+        try {
+            $date = $request->get('date');
+            $movie = Movie::findOrFail($id);
 
-        if (!$movie) {
-            return $this->sendError('Movie not found!');
+            if (!$movie) {
+                return $this->sendError('Movie not found!');
+            }
+
+            return $this->sendResponse(new MovieResource($movie), 'Movie fetched successfully!');
+        } catch (Exception $e) {
+            return $this->sendError('Something went wrong!');
         }
-
-        return $this->sendResponse(new MovieResource($movie), 'Movie fetched successfully!');
     }
 }

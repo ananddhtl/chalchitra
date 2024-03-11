@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class MovieShow extends Model
 {
     use HasFactory;
+
+    public function seats()
+    {
+        return $this->hasMany(Seat::class)->whereDoesntHave('bookings', function ($query) {
+            $query->where('movie_shows_id', $this->id);
+        });
+    }
 }

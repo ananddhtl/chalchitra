@@ -23,15 +23,27 @@ class MovieResourceCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->map(function ($movie) {
+
+            $showTimes = $movie->shows()
+                ->wherePivot('movie_date', $this->date)
+                ->select('movie_shows.id', 'show_id', 'show_time')
+                ->get()
+                ->map(function ($show) {
+                    return [
+                        'id' => "$show->id",
+                        'show_time' => $show->show_time
+                    ];
+                });
+
             return [
-                'id' => $movie->id,
+                'id' => "$movie->id",
                 'title' => $movie->title,
                 'description' => $movie->description,
                 'thumbnail' => $movie->thumbnail,
                 'iframe_link' => $movie->iframe_link,
                 'time_duration' => $movie->time_duration,
-                'category' => $movie->movie_category->title,
-                'show_time' => $movie->shows()->wherePivot('movie_date', $this->date)->pluck('show_time')->toArray()
+                'category' => $movie->movie_category->title ?? null,
+                'movie_shows' => $showTimes->toArray(),
             ];
         })->all();
     }

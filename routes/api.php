@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MovieController as ApiMovieController;
+use App\Http\Controllers\Api\SeatController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicUsersController;
@@ -45,4 +46,5 @@ Route::group(['prefix' => 'movie'], function () {
     Route::get('get-date', [ApiMovieController::class, 'getDate']);
     Route::get('lists', [ApiMovieController::class, 'getHomepage']);
     Route::get('list/{id}', [ApiMovieController::class, 'getmoviedescription']);
+    Route::get('seat-availability', [SeatController::class, 'seatAvailability']);
 });
