@@ -9,6 +9,8 @@ class Booking extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function show()
     {
         return $this->belongsTo(Show::class);
@@ -17,6 +19,16 @@ class Booking extends Model
     public function seat()
     {
         return $this->belongsTo(Seat::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(PublicUsers::class);
+    }
+
+    public function movie_show()
+    {
+        return $this->belongsTo(MovieShow::class, 'movie_shows_id');
     }
 
     // Define a relationship through the 'show' relationship to access the pivot table

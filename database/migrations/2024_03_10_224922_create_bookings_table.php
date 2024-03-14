@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('public_users');
             $table->date('booking_date');
             $table->string('payment_status')->default('unpaid')->comment('unpaid or paid');
+            $table->string('reference_id')->nullable();
             $table->timestamps();
         });
     }

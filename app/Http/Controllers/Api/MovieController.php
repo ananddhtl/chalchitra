@@ -61,7 +61,7 @@ class MovieController extends BaseApiController
                 $date = Carbon::now()->format('Y-m-d');
             }
 
-            $movie = Movie::findOrFail($id);
+            $movie = Movie::find($id);
 
             if (!$movie) {
                 return $this->sendError('Movie not found!');
@@ -69,7 +69,7 @@ class MovieController extends BaseApiController
 
             return $this->sendResponse(new MovieResource($movie, $date), 'Movie fetched successfully!');
         } catch (Exception $e) {
-            return $this->sendError('Something went wrong!');
+            return $this->sendError($e->getMessage(), 'Something went wrong!');
         }
     }
 }

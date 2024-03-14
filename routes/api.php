@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\MovieController as ApiMovieController;
 use App\Http\Controllers\Api\SeatController;
 use Illuminate\Http\Request;
@@ -47,4 +48,10 @@ Route::group(['prefix' => 'movie'], function () {
     Route::get('lists', [ApiMovieController::class, 'getHomepage']);
     Route::get('list/{id}', [ApiMovieController::class, 'getmoviedescription']);
     Route::get('seat-availability', [SeatController::class, 'seatAvailability']);
+
+
+    // Auth routes
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('seat-booking', [SeatController::class, 'seatBooking']);
+    });
 });

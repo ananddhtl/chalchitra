@@ -14,10 +14,12 @@ class SeatTableSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 20; $i++) {
+        $letters = range('A', 'T');
+
+        foreach ($letters as $letter) {
             DB::table('seats')->updateOrInsert(
                 [
-                    'seat_title' => $i,
+                    'seat_title' => $letter,
                 ],
                 ['status' => 'available']
             );
