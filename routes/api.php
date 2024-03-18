@@ -49,6 +49,9 @@ Route::group(['prefix' => 'movie'], function () {
     Route::get('list/{id}', [ApiMovieController::class, 'getmoviedescription']);
     Route::get('seat-availability', [SeatController::class, 'seatAvailability']);
 
+    // Upcomming Movies
+    Route::get('upcoming-lists', [ApiMovieController::class, 'getUpcomingMovies']);
+    Route::get('upcoming-list/{id}', [ApiMovieController::class, 'getSpecificUpcomingMovie']);
 
     // Auth routes
     Route::group(['middleware' => 'auth:api'], function () {

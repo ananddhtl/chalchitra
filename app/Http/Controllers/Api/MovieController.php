@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\BaseApiController;
 use App\Http\Resources\MovieResource;
 use App\Http\Resources\MovieResourceCollection;
+use App\Http\Resources\UpcomingMovieCollection;
+use App\Http\Resources\UpcomingMovieResource;
 use App\Models\Movie;
 use Carbon\Carbon;
 use Exception;
@@ -70,6 +72,39 @@ class MovieController extends BaseApiController
             return $this->sendResponse(new MovieResource($movie, $date), 'Movie fetched successfully!');
         } catch (Exception $e) {
             return $this->sendError($e->getMessage(), 'Something went wrong!');
+        }
+    }
+
+    public function getUpcomingMovies()
+    {
+        try {
+            $date = Carbon::now()->addDay(5)->format('Y-m-d');
+
+            $movies = Movie::releaseAfter($date)->get();
+
+            if (!$movies) {
+                return $this->sendError('Upcoming movies not found!');
+            }
+
+            return $this->sendResponse(new UpcomingMovieCollection($movies, $date), 'List of ' . $movies->count() . ' upcoming movies fetched successfully!');
+        } catch (Exception $e) {
+            return $this->sendError($e->getMessage(), 'Something went wrong');
+        }
+    }
+
+    public function getSpecificUpcomingMovie(Request $request, $id)
+    {
+        $release_date = $request->release_date;
+        try {
+            $movie = Movie::where('id', $id)->where('publish_date', $release_date)->first();
+
+            if (!$movie) {
+                return $this->sendError('Movie not found!');
+            }
+
+            return $this->sendResponse(new UpcomingMovieResource($movie), 'Movie fetched successfully!');
+        } catch (Exception $e) {
+            return $this->sendError($e->getMessage(), 'Something went wrong');
         }
     }
 }

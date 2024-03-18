@@ -17,6 +17,11 @@ class Movie extends Model
             ->where('end_date', '>=', $date);
     }
 
+    public function scopeReleaseAfter($query, $date)
+    {
+        return $query->where('publish_date', '>', $date);
+    }
+
     public function movie_category()
     {
         return $this->belongsTo(MovieCategory::class, 'category', 'id');
