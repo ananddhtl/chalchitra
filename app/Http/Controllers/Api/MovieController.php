@@ -92,11 +92,10 @@ class MovieController extends BaseApiController
         }
     }
 
-    public function getSpecificUpcomingMovie(Request $request, $id)
+    public function getSpecificUpcomingMovie($id)
     {
-        $release_date = $request->release_date;
         try {
-            $movie = Movie::where('id', $id)->where('publish_date', $release_date)->first();
+            $movie = Movie::where('id', $id)->first();
 
             if (!$movie) {
                 return $this->sendError('Movie not found!');
