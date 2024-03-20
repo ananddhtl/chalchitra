@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\BaseApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\BookingRequest;
+use App\Http\Resources\MyBookingCollection;
 use App\Models\Booking;
 use App\Models\Movie;
 use App\Models\MovieShow;
@@ -92,7 +93,7 @@ class SeatController extends BaseApiController
                     'id' => $booking->id,
                     'seat_title' => $booking->seat->seat_title,
                 ];
-                
+
                 $bookings = [
                     'users_name' => $booking->user->name,
                     'movie_name' => $movie->title,
@@ -104,6 +105,23 @@ class SeatController extends BaseApiController
             }
 
             return $this->sendResponse($bookings, 'Seats booked successfully!');
+        } catch (Exception $e) {
+            return $this->sendError($e->getMessage(), 'Something went wrong');
+        }
+    }
+
+    public function myBooking()
+    {
+        try {
+            $bookings = Booking::where('user_id', Auth::user()->id)->get();
+
+            $my_bookings = new MyBookingCollection($bookings);
+
+            // $data = [
+            //     ''
+            // ]
+
+            return $this->sendResponse($my_bookings, 'My bookings fetched successfully!');
         } catch (Exception $e) {
             return $this->sendError($e->getMessage(), 'Something went wrong');
         }

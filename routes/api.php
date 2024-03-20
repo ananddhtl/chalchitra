@@ -56,5 +56,6 @@ Route::group(['prefix' => 'movie'], function () {
     // Auth routes
     Route::group(['middleware' => 'auth:api'], function () {
         Route::post('seat-booking', [SeatController::class, 'seatBooking']);
+        Route::get('my-booking', [SeatController::class, 'myBooking']);
     });
 });

@@ -15,4 +15,9 @@ class MovieShow extends Model
             $query->where('movie_shows_id', $this->id);
         });
     }
+
+    public function movie()
+    {
+        return $this->belongsTo(Movie::class);
+    }
 }
